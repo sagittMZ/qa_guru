@@ -23,6 +23,6 @@ public class GoogleTests {
     @Test
     public void mailSearch() {
         open("https://mail.ru/");
-        $(byName("q")).val(ufc).pressEnter();
+        $(byName("q")).val("ufc").pressEnter();
     }
 }
