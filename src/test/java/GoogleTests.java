@@ -18,4 +18,11 @@ public class GoogleTests {
         // Проверить, что поисковый запрос есть в результатах поиска
         $("html").shouldHave(Condition.text("Ultimate Fighting Championship"));
     }
+    
+//     Сейчас все ищут через Mail ты че !! ))) 
+    @Test
+    public void mailSearch() {
+        open("https://mail.ru/");
+        $(byName("q")).val(ufc).pressEnter();
+    }
 }
