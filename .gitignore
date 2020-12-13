@@ -1,0 +1,14 @@
+# Idea
+.idea
+*.iml
+
+# Gradle
+
+.gradle
+build
+
+# Allure
+.allure
+
+# Credential
+/src/test/sources/config.properties
