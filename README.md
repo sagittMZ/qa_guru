@@ -1,2 +1,2 @@
-# mma_rank
+# qa.guru
 a little bit fun
