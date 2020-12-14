@@ -47,12 +47,12 @@ public class BaseMethods {
         }
     }
 
-    public String getCurrentTimeStamp()
+    public  String getCurrentTimeStamp()
     {
         String timestamp = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").format(new Date());
         return timestamp;
     }
-    public static String generateDescription() {
+    public  String generateDescription() {
 
         int wordsCount = ThreadLocalRandom.current().nextInt(4, 10);
         List<String> words = new ArrayList<String>();
@@ -64,7 +64,7 @@ public class BaseMethods {
         return listString;
     }
 
-    public static String generateText(Integer min_characters, Integer max_characters) {
+    public  String generateText(Integer min_characters, Integer max_characters) {
         int randomNum = ThreadLocalRandom.current().nextInt(min_characters, max_characters);
         String generatedString = RandomStringUtils.randomAlphabetic(randomNum);
         return generatedString;
