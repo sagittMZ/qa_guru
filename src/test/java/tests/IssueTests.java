@@ -80,7 +80,7 @@ public class IssueTests extends BaseMethods {
         steps.fillIssuesInputs(issue_name, description);
         steps.assigningIssue();
         steps.submitNewIssue();
-        steps.checkTheIssueWasCreated();
+        steps.checkTheIssueWasCreated(issue_name);
     }
 
 

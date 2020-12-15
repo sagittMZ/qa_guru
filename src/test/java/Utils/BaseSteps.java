@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.$;
 
 public class BaseSteps {
-    public String issue_name;
+    //public String issue_name;
 
     @Step("Go to create issue")
     public void goToCreateIssue() {
@@ -21,6 +21,7 @@ public class BaseSteps {
         System.out.println("fill form");
         $("#issue_title").setValue(issue_name);
         $("#issue_body").setValue(description);
+        System.out.println("issue name is: " + issue_name);
     }
     @Step("Assigning issue to developer")
     public void assigningIssue() {
@@ -31,7 +32,7 @@ public class BaseSteps {
         $(withText("Submit new issue")).click();
     }
     @Step("Checking the condition 'The new issue is successfully created'")
-    public void checkTheIssueWasCreated() {
+    public void checkTheIssueWasCreated(String issue_name) {
         $(byText(issue_name)).shouldBe(Condition.visible);
         System.out.println("check if issue exist");
     }
