@@ -53,7 +53,7 @@ public class StudentRegistrationForm {
         $(byText(state)).click();
         $("#city").click();
         $(byText(city)).click();
-        $("#uploadPicture").uploadFile(new File("src/test/diffsrc/" + fileName));
+        $("#uploadPicture").uploadFile(new File("src/test/sources/" + fileName));
         $("#submit").click();
 
         //check example

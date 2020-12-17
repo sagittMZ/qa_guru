@@ -4,8 +4,11 @@ import Utils.BaseMethods;
 import Utils.BaseSteps;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
-import io.qameta.allure.Step;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Link;
+import io.qameta.allure.Owner;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 
@@ -29,6 +32,10 @@ public class IssueTests extends BaseMethods {
     }
 
     @Test
+    @DisplayName("Создание issue с использоавнием чистого селенида")
+    @Feature("Issue")
+    @Link(url="https://github.com/sagittMZ/qa_guru", name ="Учимсо потихоньку")
+    @Owner("s_a_g_i_t_t")
     public void createIssueUsingPureSelenide() {
 
         String issues_name = "Issue was created at " + getCurrentTimeStamp();
@@ -43,6 +50,10 @@ public class IssueTests extends BaseMethods {
     }
 
     @Test
+    @DisplayName("Создание issue с использованием лямбда выражений")
+    @Feature("Issue")
+    @Link(url="https://github.com/sagittMZ/qa_guru", name ="Учимсо потихоньку")
+    @Owner("s_a_g_i_t_t")
     public void createIssueUsingLambda() {
         Map<String,String> data = new HashMap<>();
         data.put("CurrentTime",getCurrentTimeStamp());
@@ -69,13 +80,17 @@ public class IssueTests extends BaseMethods {
     }
 
     @Test
+    @DisplayName("Создание issue с использованием аннотаций")
+    @Feature("Issue")
+    @Link(url="https://github.com/sagittMZ/qa_guru", name ="Учимсо потихоньку")
+    @Owner("s_a_g_i_t_t")
     public void createIssueUsingAnnotation() {
         BaseSteps steps = new BaseSteps();
         Map<String,String> data = new HashMap<>();
         data.put("CurrentTime",getCurrentTimeStamp());
         data.put("Description",generateDescription());
-        String issue_name = "Issue was created at " + data.get("CurrentTime");
-        String description = "Some crazy description" + data.get("Description");
+        String issue_name = "Issue was created at: " + data.get("CurrentTime");
+        String description = "Some crazy description: " + data.get("Description");
         steps.goToCreateIssue();
         steps.fillIssuesInputs(issue_name, description);
         steps.assigningIssue();
