@@ -2,12 +2,14 @@ package utils;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.HttpResponse;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static com.codeborne.selenide.Selectors.byAttribute;
@@ -70,6 +72,26 @@ public class BaseMethods {
         return generatedString;
     }
 
+    public static String getRequest(String url_path) throws IOException
+    {
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        HttpGet httpget = new HttpGet(url_path);
+        HttpResponse httpresponse = httpclient.execute(httpget);
+        Scanner sc = new Scanner(((CloseableHttpResponse) httpresponse).getEntity().getContent());
+        StringBuffer result = new StringBuffer();
+        int statuscode = httpresponse.getCode();
+        if (statuscode == 200) {
+
+            while (sc.hasNext()) {
+                result.append(sc.nextLine());
+            }
+        }
+        else
+        {
+            System.out.println("Server died :-)");
+        }
+        return String.valueOf(result);
+    }
 
 
 }
