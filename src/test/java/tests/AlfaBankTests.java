@@ -21,7 +21,7 @@ public class AlfaBankTests {
     @Test
     public void goToAlfaArchiveDeposits() {
 
-        $$(byText("Депозиты")).filter(visible).first().parent().click();
+        $$(byText("Популярные")).filter(visible).first().parent().sibling(2).click();
         $$(byText("Архивные счета и депозиты")).filter(visible).first().click();
         $$(byText("Депозиты")).filter(visible).first().parent().click();
         int archive_deposits_amount = $$(byText("Подробные условия")).size();

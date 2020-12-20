@@ -23,7 +23,6 @@ public class StudentRegistrationForm {
     @Test
     public void fillFormTestPositiveScenario() {
 
-
         String name = "GoodUserName",
                 lastname = "GoodLastName",
                 email = "ytbgtwdw@supere.ml",
@@ -35,16 +34,13 @@ public class StudentRegistrationForm {
                 currentAddress = "Alte Oper Frankfurt",
                 fileName = "pic.jpg";
 
-
         $("#firstName").val(name);
         $("#lastName").val(lastname);
         $("#userEmail").val(email);
         $(byText(gender)).click();
         $("#userNumber").val(phone);
         $("#dateOfBirthInput").click();
-        //$(".react-datepicker__month-select").click();
         $(".react-datepicker__month-select").selectOptionByValue("0");
-        //$(".react-datepicker__year-select").click();
         $(".react-datepicker__year-select").selectOptionByValue("1951");
         $(".react-datepicker__day--023").click();
         $(byText(hobby)).click();
@@ -61,9 +57,5 @@ public class StudentRegistrationForm {
         $(byXpath("//tbody")).shouldHave(text(email));
         $("#closeLargeModal").click();
         System.out.println("game over");
-
-
-
-
     }
 }

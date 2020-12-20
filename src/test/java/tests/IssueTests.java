@@ -1,7 +1,7 @@
 package tests;
 
-import Utils.BaseMethods;
-import Utils.BaseSteps;
+import utils.BaseMethods;
+import utils.BaseSteps;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import io.qameta.allure.Feature;
