@@ -17,7 +17,7 @@ public class APITests extends BaseMethods {
     @Feature("Issue")
     @Link(url="https://github.com/sagittMZ/qa_guru", name ="Учимсо потихоньку")
     @Owner("s_a_g_i_t_t")
-    public void simpleCheckStatusAPItest() {
+    public void simpleCheckStatusAPITest() {
         try {
             getRequest("https://qa.guru/");
         } catch (IOException e) {
