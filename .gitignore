@@ -1,9 +1,9 @@
 # Idea
 .idea
 *.iml
+/.idea/
 
 # Gradle
-
 .gradle
 build
 
@@ -12,3 +12,4 @@ build
 
 # Credential
 /src/test/sources/config.properties
+

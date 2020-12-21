@@ -1,6 +1,12 @@
 
-plugins {
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+    plugins {
     id 'java'
+    id 'application'
     id "io.qameta.allure" version "2.8.1"
 }
 
@@ -8,14 +14,22 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    allureVersion = "2.13.7"
+    selenideVersion = "5.16.2"
+    junitVersion = "5.7.0"
+}
 dependencies {
 
-    compile("com.codeborne:selenide:5.15.1")
-    compile("org.junit.jupiter:junit-jupiter-api:5.7.0")
-    compile("org.junit.jupiter:junit-jupiter-engine:5.7.0")
-    compile("org.junit.jupiter:junit-jupiter-params:5.7.0")
+    compile("com.codeborne:selenide:${selenideVersion}")
+    compile("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    compile("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    compile("org.junit.jupiter:junit-jupiter-params:${junitVersion}")
     compile("org.aspectj:aspectjweaver:1.9.6")
-    //implementation 'io.qameta.allure:allure-commandline:2.13.7'
+    compile("io.qameta.allure:allure-selenide:${allureVersion}")
+    testImplementation "com.github.javafaker:javafaker:1.0.2"
+    testImplementation "ch.qos.logback:logback-classic:1.2.3"
+
 
 }
 
@@ -25,10 +39,12 @@ tasks.withType(JavaCompile) {
 
 allure {
     autoconfigure = true
+    aspectjweaver = true
     version = '2.13.7'
-    useJUnit5 {version = '2.13.7'}
+    useJUnit5 {version = "${allureVersion}"}
 }
 
 test {
+    systemProperties = System.properties
     useJUnitPlatform()
 }
