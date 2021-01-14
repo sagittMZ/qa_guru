@@ -18,16 +18,19 @@ import java.util.Map;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
+import static utils.BaseMethods.githubLogin;
 
-public class IssueTests extends BaseMethods {
+public class IssueTests  {
 
     private static String REPOSITORY = "https://github.com/sagittMZ/qa_guru";
-
+    BaseMethods base = new BaseMethods();
     @BeforeAll
      static void setup() {
         Configuration.startMaximized = true;
+
         githubLogin();
         open(REPOSITORY);
+
 
     }
 
@@ -37,13 +40,13 @@ public class IssueTests extends BaseMethods {
     @Link(url="https://github.com/sagittMZ/qa_guru", name ="Учимсо потихоньку")
     @Owner("s_a_g_i_t_t")
     public void createIssueUsingPureSelenide() {
-
-        String issues_name = "Issue was created at " + getCurrentTimeStamp();
+        //BaseMethods base = new BaseMethods();
+        String issues_name = "Issue was created at " + base.getCurrentTimeStamp();
         System.out.println("Just wait a little bit");
         $(byAttribute("data-content","Issues")).click();
         $(By.linkText("New issue")).click();
         $("#issue_title").setValue(issues_name);
-        $("#issue_body").setValue("Some crazy description" + generateDescription());
+        $("#issue_body").setValue("Some crazy description" + base.generateDescription());
         $(byText("assign yourself")).click();
         $(withText("Submit new issue")).click();
         $(byText(issues_name)).shouldBe(Condition.visible);
@@ -55,8 +58,9 @@ public class IssueTests extends BaseMethods {
     @Link(url="https://github.com/sagittMZ/qa_guru", name ="Учимсо потихоньку")
     @Owner("s_a_g_i_t_t")
     public void createIssueUsingLambda() {
+        BaseMethods base = new BaseMethods();
         Map<String,String> data = new HashMap<>();
-        data.put("CurrentTime",getCurrentTimeStamp());
+        data.put("CurrentTime",base.getCurrentTimeStamp());
         step("Go to create new issue", ()->{
             $(byAttribute("data-content","Issues")).click();
             $(By.linkText("New issue")).click();
@@ -64,7 +68,7 @@ public class IssueTests extends BaseMethods {
         step("Fill issues inputs", ()->{
             String issues_name = "Issue was created at " + data.get("CurrentTime");
             $("#issue_title").setValue(issues_name);
-            $("#issue_body").setValue("Some crazy description" + generateDescription());
+            $("#issue_body").setValue("Some crazy description" + base.generateDescription());
         });
         step("Assigning issue to developer", ()-> {
             $(byText("assign yourself")).click();
@@ -74,6 +78,7 @@ public class IssueTests extends BaseMethods {
         });
         step("Checking the condition 'The new issue is successfully created'", ()-> {
             String issues_name = "Issue was created at " + data.get("CurrentTime");
+            $(byAttribute("data-content", "Issues")).click();
             $(byText(issues_name)).shouldBe(Condition.visible);
             System.out.println("Checking the condition 'The new issue is successfully created'");
         });
@@ -87,8 +92,8 @@ public class IssueTests extends BaseMethods {
     public void createIssueUsingAnnotation() {
         BaseSteps steps = new BaseSteps();
         Map<String,String> data = new HashMap<>();
-        data.put("CurrentTime",getCurrentTimeStamp());
-        data.put("Description",generateDescription());
+        data.put("CurrentTime",base.getCurrentTimeStamp());
+        data.put("Description",base.generateDescription());
         String issue_name = "Issue was created at: " + data.get("CurrentTime");
         String description = "Some crazy description: " + data.get("Description");
         steps.goToCreateIssue();
