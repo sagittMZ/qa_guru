@@ -10,7 +10,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 import static com.codeborne.selenide.logevents.SelenideLogger.addListener;
 import static helpers.AttachmentsHelper.*;
-import static org.openqa.selenium.remote.BrowserType.FIREFOX;
 
 public class TestBase {
     @BeforeAll
@@ -27,10 +26,13 @@ public class TestBase {
           //    systemProperties = System.properties
           //    useJUnitPlatform()
           //}
-        Configuration.remote = "https://user1:1234@" + System.getProperty("remote.browser.url") + ":4444/wd/hub/";
+        //Configuration.remote = "https://user1:1234@" + System.getProperty("remote.browser.url") + ":4444/wd/hub/";
         Configuration.remote = "https://user1:1234@selenoid.autotests.cloud:4444/wd/hub/";
         Configuration.browserVersion = "85.0";
         Configuration.startMaximized = true;
+
+
+
     }
 
     @AfterEach

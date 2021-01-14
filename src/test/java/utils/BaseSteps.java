@@ -33,7 +33,7 @@ public class BaseSteps {
     }
     @Step("Checking the condition 'The new issue is successfully created'")
     public void checkTheIssueWasCreated(String issue_name) {
-        $(byAttribute("data-content", "Issues")).click();
+      //  $(byAttribute("data-content", "Issues")).click();
         $(byText(issue_name)).shouldBe(Condition.visible);
         System.out.println("check if issue exist");
     }
