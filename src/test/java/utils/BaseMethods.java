@@ -7,9 +7,9 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.HttpResponse;
-import tests.TestBase;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -18,13 +18,13 @@ import static com.codeborne.selenide.Selectors.byName;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class BaseMethods extends TestBase {
+public class BaseMethods  {
     private final static String GITHUB_LOGIN_URL = "https://github.com/login";
-    private final static String CONFIG_PATH ="/home/sagitt/CodePractice/mma_rank/src/test/sources/config.properties";
+    private final static String CONFIG_PATH ="/home/sagitt/CodePractice/qaguru/src/test/resources/project.properties";
 
 
 
-    public static void githubLogin() {
+    public static void githubLogin(String login, String password) {
         open(GITHUB_LOGIN_URL);
 
         FileInputStream fileInputStream;
@@ -36,11 +36,11 @@ public class BaseMethods extends TestBase {
             fileInputStream = new FileInputStream(CONFIG_PATH);
             prop.load(fileInputStream);
 
-            String site = prop.getProperty("site");
-            String loginToSite = prop.getProperty("login");
-            String passwordToSite = prop.getProperty("password");
-            $(byName("login")).val(loginToSite);
-            $(byName("password")).val(passwordToSite);
+//            String site = prop.getProperty("site");
+//            String loginToSite = prop.getProperty("login");
+//            String passwordToSite = prop.getProperty("password");
+            $(byName("login")).val(login);
+            $(byName("password")).val(password);
             $(byAttribute("value","Sign in")).click();
 
 

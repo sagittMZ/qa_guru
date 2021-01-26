@@ -1,49 +1,52 @@
 package tests;
 
-import com.codeborne.selenide.Configuration;
-import io.qameta.allure.Step;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import utils.BaseMethods;
-import utils.BaseSteps;
 import com.codeborne.selenide.Condition;
+import conf.IssueConfig;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import utils.BaseMethods;
+import utils.BaseSteps;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.codeborne.selenide.Selectors.*;
-import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
-import static helpers.AttachmentsHelper.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 import static io.qameta.allure.Allure.step;
 
 
 
-public class IssueTests extends BaseMethods{
+public class IssueTests extends  TestBase{
+    IssueConfig config = ConfigFactory.newInstance().create(IssueConfig.class);
+    String login = config.login();
+    String password = config.password();
+
 
     private static String REPOSITORY = "https://github.com/sagittMZ/qa_guru";
-   // BaseMethods base = new BaseMethods();
-//TODO Не забыть спросить почему при подключении селеноида и использовании настроек из TestBase не логинит
+    BaseMethods base = new BaseMethods();
 
-    @BeforeAll
-     static void setup() {
-        Configuration.startMaximized = true;
-    }
-    @AfterEach
-    @Step("Attachments")
-    public void afterEach(){
-        attachScreenshot("Last screenshot");
-        attachPageSource();
-        attachAsText("Browser console logs", getConsoleLogs());
-        attachVideo();
-        closeWebDriver();
-    }
+
+//TODO Не забыть спросить почему при подключении селеноида и использовании настроек из TestBase не логинит
+//
+//    @BeforeAll
+//     static void setup() {
+//        Configuration.startMaximized = true;
+//    }
+//    @AfterEach
+//    @Step("Attachments")
+//    public void afterEach(){
+//        attachScreenshot("Last screenshot");
+//        attachPageSource();
+//        attachAsText("Browser console logs", getConsoleLogs());
+//        attachVideo();
+//        closeWebDriver();
+//    }
 
     @Test
     @DisplayName("Создание issue с использоавнием чистого селенида")
@@ -51,14 +54,14 @@ public class IssueTests extends BaseMethods{
     @Link(url="https://github.com/sagittMZ/qa_guru", name ="Учимсо потихоньку")
     @Owner("s_a_g_i_t_t")
     public void createIssueUsingPureSelenide() {
-        githubLogin();
-        open(REPOSITORY);
-        String issues_name = "Issue was created at " + getCurrentTimeStamp();
+        base.githubLogin(login, password);
+//        open(REPOSITORY);
+        String issues_name = "Issue was created at " + base.getCurrentTimeStamp();
         System.out.println("Just wait a little bit");
         $(byAttribute("data-content","Issues")).click();
         $(By.linkText("New issue")).click();
         $("#issue_title").setValue(issues_name);
-        $("#issue_body").setValue("Some crazy description" + generateDescription());
+        $("#issue_body").setValue("Some crazy description" + base.generateDescription());
         $(byText("assign yourself")).click();
         $(withText("Submit new issue")).click();
         $(byText(issues_name)).shouldBe(Condition.visible);
@@ -70,10 +73,10 @@ public class IssueTests extends BaseMethods{
     @Link(url="https://github.com/sagittMZ/qa_guru", name ="Учимсо потихоньку")
     @Owner("s_a_g_i_t_t")
     public void createIssueUsingLambda() {
-        githubLogin();
+        base.githubLogin(login, password);
         open(REPOSITORY);
         Map<String,String> data = new HashMap<>();
-        data.put("CurrentTime",getCurrentTimeStamp());
+        data.put("CurrentTime",base.getCurrentTimeStamp());
         step("Go to create new issue", ()->{
             $(byAttribute("data-content","Issues")).click();
             $(By.linkText("New issue")).click();
@@ -81,7 +84,7 @@ public class IssueTests extends BaseMethods{
         step("Fill issues inputs", ()->{
             String issues_name = "Issue was created at " + data.get("CurrentTime");
             $("#issue_title").setValue(issues_name);
-            $("#issue_body").setValue("Some crazy description" + generateDescription());
+            $("#issue_body").setValue("Some crazy description" + base.generateDescription());
         });
         step("Assigning issue to developer", ()-> {
             $(byText("assign yourself")).click();
@@ -103,12 +106,12 @@ public class IssueTests extends BaseMethods{
     @Link(url="https://github.com/sagittMZ/qa_guru", name ="Учимсо потихоньку")
     @Owner("s_a_g_i_t_t")
     public void createIssueUsingAnnotation() {
-        githubLogin();
-        open(REPOSITORY);
+//        open(REPOSITORY);
+        base.githubLogin(login, password);
         BaseSteps steps = new BaseSteps();
         Map<String,String> data = new HashMap<>();
-        data.put("CurrentTime",getCurrentTimeStamp());
-        data.put("Description",generateDescription());
+        data.put("CurrentTime",base.getCurrentTimeStamp());
+        data.put("Description",base.generateDescription());
         String issue_name = "Issue was created at: " + data.get("CurrentTime");
         String description = "Some crazy description: " + data.get("Description");
         steps.goToCreateIssue();
@@ -118,5 +121,20 @@ public class IssueTests extends BaseMethods{
         steps.checkTheIssueWasCreated(issue_name);
     }
 
+    @Test
+    @DisplayName("Проверка логина")
+    @Feature("Issue")
+    @Link(url="https://github.com/sagittMZ/qa_guru", name ="Учимсо потихоньку")
+    @Owner("s_a_g_i_t_t")
+    public void checkLoginToGithub() {
+        step("Open github", ()-> {
+            System.out.println("bebebbebe");
+//            open(REPOSITORY);
+        });
+        step("Log in", ()-> {
+            base.githubLogin(login, password);
+        });
+        System.out.println("test");
+    }
 
 }

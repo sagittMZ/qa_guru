@@ -20,7 +20,7 @@ ext {
     junitVersion = "5.7.0"
 }
 dependencies {
-
+    compile ("org.aeonbits.owner:owner:1.0.12")
     compile("com.codeborne:selenide:${selenideVersion}")
     compile("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     compile("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
@@ -46,5 +46,9 @@ allure {
 
 test {
     systemProperties = System.properties
+  //  systemProperty("device","pixel-6")
+    systemProperty("device","android-10")
+    systemProperty("service.name", "testing-01")
+   // systemProperty("webdriver.browser.name","CHROME")
     useJUnitPlatform()
 }

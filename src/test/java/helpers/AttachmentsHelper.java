@@ -1,13 +1,13 @@
 package helpers;
 
 import com.codeborne.selenide.Selenide;
+import conf.IssueConfig;
 import io.qameta.allure.Attachment;
+import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -15,6 +15,9 @@ import static org.openqa.selenium.logging.LogType.BROWSER;
 
 
 public class AttachmentsHelper {
+    IssueConfig config = ConfigFactory.newInstance().create(IssueConfig.class);
+
+    String selenoidUrl = config.selenoidUrl();
 
     @Attachment(value = "{attachName}", type = "text/plain")
     public static String attachAsText(String attachName, String message) {
@@ -40,7 +43,8 @@ public class AttachmentsHelper {
     }
 
     public static String getVideoUrl() {
-        return "https://" + System.getProperty("remote.browser.url") + "/video/" + getSessionId() + ".mp4";
+       // return "https://" + System.getProperty("remote.browser.url") + "/video/" + getSessionId() + ".mp4";
+        return "https://" + System.getProperty("selenoid.autotests.cloud") + "/video/" + getSessionId() + ".mp4";
     }
 
     public static String getSessionId(){
